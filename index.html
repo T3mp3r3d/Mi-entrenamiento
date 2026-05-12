@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini Fitness Pro | Tracker</title>
+    <style>
+        :root {
+            --primary: #00f2fe;
+            --secondary: #4facfe;
+            --bg: #0b0e14;
+            --card-bg: #1a1f26;
+            --text: #e0e6ed;
+            --accent: #7fffd4;
+            --danger: #ff4b2b;
+            --success: #00e676;
+        }
+
+        body {
+            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            margin: 0;
+            padding: 20px;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1100px;
+            margin: auto;
+        }
+
+        header {
+            text-align: center;
+            padding: 40px 0;
+            background: linear-gradient(135deg, var(--secondary), var(--primary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        h1 { font-size: 2.5rem; margin-bottom: 10px; }
+
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+        }
+
+        @media (max-width: 850px) { .grid { grid-template-columns: 1fr; } }
+
+        .card {
+            background: var(--card-bg);
+            padding: 25px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+            border: 1px solid rgba(255,255,255,0.05);
+            margin-bottom: 25px;
+            transition: transform 0.3s ease;
+        }
+
+        h2 { color: var(--accent); border-left: 4px solid var(--accent); padding-left: 15px; font-size: 1.4rem; }
+
+        table {
+            width: 100%;
+            border-collapse: separate;
+            border-spacing: 0 8px;
+            margin-top: 15px;
+        }
+
+        th { color: var(--secondary); text-transform: uppercase; font-size: 12px; letter-spacing: 1px; padding: 10px; }
+        
+        td { background: rgba(255,255,255,0.03); padding: 12px; text-align: center; border-radius: 8px; }
+
+        input, select, textarea {
+            background: #252b33;
+            border: 1px solid #3d4450;
+            color: white;
+            padding: 10px;
+            border-radius: 8px;
+            outline: none;
+            transition: 0.3s;
+        }
+
+        input:focus { border-color: var(--primary); box-shadow: 0 0 8px rgba(79, 172, 254, 0.4); }
+
+        button {
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            color: #000;
+            font-weight: bold;
+            padding: 12px 25px;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            width: 100%;
+            margin-top: 15px;
+        }
+
+        button:hover { filter: brightness(1.2); transform: translateY(-2px); }
+
+        .progress-container {
+            background: #252b33;
+            border-radius: 50px;
+            height: 12px;
+            margin: 20px 0;
+            overflow: hidden;
+        }
+
+        .bar {
+            height: 100%;
+            background: linear-gradient(90deg, var(--secondary), var(--primary));
+            width: 0%;
+            transition: width 1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
+            box-shadow: 0 0 15px var(--primary);
+        }
+
+        /* Detalle de Ejercicios */
+        .exercise-detail {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 15px;
+            margin-top: 20px;
+        }
+
+        .ex-item {
+            background: #252b33;
+            padding: 15px;
+            border-radius: 12px;
+            font-size: 14px;
+        }
+
+        .ex-item b { color: var(--primary); display: block; margin-bottom: 5px; font-size: 16px; }
+        .tag { font-size: 11px; background: #3d4450; padding: 2px 8px; border-radius: 4px; color: var(--accent); }
+
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <header>
+        <h1>GEMINI FITNESS PRO</h1>
+        <p>Tu evolución, cuantificada.</p>
+    </header>
+
+    <div class="grid">
+        <div class="card">
+            <h2>📉 Control de Composición</h2>
+            <div style="display: flex; gap: 10px; align-items: center;">
+                <input type="number" id="pesoActual" placeholder="Peso (kg)" style="flex:1">
+                <button onclick="guardarPeso()" style="margin:0; width: auto;">Registrar</button>
+            </div>
+            <div class="progress-container">
+                <div class="bar" id="barraPeso"></div>
+            </div>
+            <p id="mensajePeso" style="text-align: center; font-weight: bold;"></p>
+            <table id="tablaPeso">
+                <thead><tr><th>#</th><th>Peso</th><th>Estado</th></tr></thead>
+                <tbody></tbody>
+            </table>
+            <p class="small" style="color:#666; font-size: 12px;">Meta: Reducir de 85kg a 75kg</p>
+        </div>
+
+        <div class="card">
+            <h2>🌙 Bio-Descanso</h2>
+            <table>
+                <tr>
+                    <th>Día</th>
+                    <th>Horas</th>
+                    <th>Calidad</th>
+                </tr>
+                <script>
+                    const dias = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
+                    dias.forEach(d => {
+                        document.write(`
+                            <tr>
+                                <td>${d}</td>
+                                <td><input type="number" class="sueño" style="width:50px" placeholder="0"></td>
+                                <td>
+                                    <select class="descanso">
+                                        <option value="Bien">🟢 Bien</option>
+                                        <option value="Normal">🟡 Regular</option>
+                                        <option value="Mal">🔴 Mal</option>
+                                    </select>
+                                </td>
+                            </tr>
+                        `);
+                    });
+                </script>
+            </table>
+        </div>
+    </div>
+
+    <div class="card">
+        <h2>📅 Plan de Entrenamiento Semanal</h2>
+        <div style="overflow-x: auto;">
+            <table>
+                <thead>
+                    <tr>
+                        <th>Día</th>
+                        <th>Ejercicio</th>
+                        <th>Completado</th>
+                        <th>Extras</th>
+                        <th>Notas/Molestias</th>
+                    </tr>
+                </thead>
+                <tbody id="rutinaBody">
+                    <tr><td>Lun</td><td>Flexiones Inclinadas (3x10)</td><td><input type="checkbox" class="ejercicio"></td><td><input type="number" class="extra" style="width:40px"></td><td><input type="text" class="molestia"></td></tr>
+                    <tr><td>Lun</td><td>Flexiones Normales (3x5)</td><td><input type="checkbox" class="ejercicio"></td><td><input type="number" class="extra" style="width:40px"></td><td><input type="text" class="molestia"></td></tr>
+                    <tr><td>Mar</td><td>Sentadillas (4x12)</td><td><input type="checkbox" class="ejercicio"></td><td><input type="number" class="extra" style="width:40px"></td><td><input type="text" class="molestia"></td></tr>
+                    <tr><td>Mié</td><td>Remo con Mochila (4x12)</td><td><input type="checkbox" class="ejercicio"></td><td><input type="number" class="extra" style="width:40px"></td><td><input type="text" class="molestia"></td></tr>
+                    <tr><td>Vie</td><td>Plancha Core (3x40s)</td><td><input type="checkbox" class="ejercicio"></td><td><input type="number" class="extra" style="width:40px"></td><td><input type="text" class="molestia"></td></tr>
+                </tbody>
+            </table>
+        </div>
+        <button onclick="calcularProgreso()">Analizar Rendimiento de la Semana</button>
+        <div class="progress-container">
+            <div class="bar" id="barraEntreno"></div>
+        </div>
+        <h3 id="resultadoEntreno" style="font-size: 1.1rem; text-align: center;"></h3>
+    </div>
+
+    <div class="card">
+        <h2>📖 Guía Técnica de Ejercicios</h2>
+        <div class="exercise-detail">
+            <div class="ex-item">
+                <b>Flexiones Inclinadas</b>
+                <span class="tag">Pecho Superior / Tríceps</span>
+                <p>Manos sobre una superficie elevada (silla/sofá). Mantener el cuerpo recto como una tabla. <br>⏱ <i>45-60 seg por serie.</i></p>
+            </div>
+            <div class="ex-item">
+                <b>Remo con Mochila</b>
+                <span class="tag">Espalda / Bíceps</span>
+                <p>Espalda paralela al suelo, rodillas semiflexionadas. Lleva la mochila al ombligo apretando escápulas.<br>⏱ <i>50 seg por serie.</i></p>
+            </div>
+            <div class="ex-item">
+                <b>Sentadillas (Squats)</b>
+                <span class="tag">Cuádriceps / Glúteo</span>
+                <p>Pies ancho de hombros. Bajar cadera rompiendo el paralelo sin levantar talones.<br>⏱ <i>60 seg por serie.</i></p>
+            </div>
+            <div class="ex-item">
+                <b>Plancha (Plank)</b>
+                <span class="tag">Core / Estabilidad</span>
+                <p>Apoyo en antebrazos. Apretar glúteos y abdomen fuertemente. Evitar que caiga la cadera.<br>⏱ <i>30-45 seg por serie.</i></p>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    let contador = 1;
+
+    function guardarPeso(){
+        let inicial = 85;
+        let objetivo = 75;
+        let actual = parseFloat(document.getElementById("pesoActual").value);
+
+        if(isNaN(actual)){
+            alert("Por favor, introduce un número válido.");
+            return;
+        }
+
+        let progreso = ((inicial - actual) / (inicial - objetivo)) * 100;
+        progreso = Math.max(0, Math.min(100, progreso));
+
+        document.getElementById("barraPeso").style.width = progreso + "%";
+        
+        let texto = "";
+        let color = "";
+        if(actual < inicial) { texto = "¡Vas por buen camino! -" + (inicial-actual).toFixed(1) + "kg"; color="#00e676"; }
+        else if(actual == inicial) { texto = "Manteniendo el peso inicial."; color="#ffeb3b"; }
+        else { texto = "Peso por encima del inicial."; color="#ff4b2b"; }
+
+        document.getElementById("mensajePeso").innerText = texto;
+        document.getElementById("mensajePeso").style.color = color;
+
+        let tabla = document.querySelector("#tablaPeso tbody");
+        let fila = tabla.insertRow(0);
+        fila.innerHTML = `<td>${contador++}</td><td>${actual} kg</td><td style="color:${color}">${actual < inicial ? 'Bajando' : 'Estable'}</td>`;
+    }
+
+    function calcularProgreso(){
+        let ejercicios = document.querySelectorAll(".ejercicio");
+        let extras = document.querySelectorAll(".extra");
+        let molestias = document.querySelectorAll(".molestia");
+        let sueño = document.querySelectorAll(".sueño");
+        let descanso = document.querySelectorAll(".descanso");
+
+        let hechos = 0;
+        let repsExtra = 0;
+        let molestiasCount = 0;
+        let sueñoTotal = 0;
+        let sueñoDias = 0;
+        let malosDescansos = 0;
+
+        ejercicios.forEach(e => { if(e.checked) hechos++; });
+        extras.forEach(x => { repsExtra += Number(x.value || 0); });
+        molestias.forEach(m => { if(m.value.trim() !== "") molestiasCount++; });
+        
+        sueño.forEach(s => {
+            if(s.value){
+                sueñoTotal += Number(s.value);
+                sueñoDias++;
+            }
+        });
+
+        descanso.forEach(d => { if(d.value == "Mal") malosDescansos++; });
+
+        let promedioSueño = sueñoDias > 0 ? (sueñoTotal/sueñoDias).toFixed(1) : 0;
+        let porcentaje = (hechos/ejercicios.length)*100;
+
+        document.getElementById("barraEntreno").style.width = porcentaje + "%";
+
+        let mensaje = (porcentaje >= 80) ? "🔥 ¡Nivel Leyenda esta semana! " : "⚡ Buen trabajo, mantén el ritmo. ";
+        
+        if(promedioSueño < 7) mensaje += `<br>⚠️ Ojo: Dormiste ${promedioSueño}h de media. El músculo crece cuando descansas.`;
+        if(molestiasCount > 2) mensaje += `<br>🛑 Tienes ${molestiasCount} molestias. Prioriza la técnica sobre el peso.`;
+        if(repsExtra > 10) mensaje += `<br>🚀 ¡Bonus! Esas reps extra marcarán la diferencia.`;
+
+        document.getElementById("resultadoEntreno").innerHTML = mensaje;
+    }
+</script>
+
+</body>
+</html>
