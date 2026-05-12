@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Gemini Fitness Pro | Tracker</title>
+    <title>Mi Rutina | Fitness Tracker</title>
     <style>
         :root {
             --primary: #00f2fe;
@@ -12,126 +12,134 @@
             --card-bg: #1a1f26;
             --text: #e0e6ed;
             --accent: #7fffd4;
-            --danger: #ff4b2b;
             --success: #00e676;
+            --warning: #ffeb3b;
         }
 
         body {
-            font-family: 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
             background: var(--bg);
             color: var(--text);
             margin: 0;
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 1100px;
-            margin: auto;
-        }
-
-        header {
-            text-align: center;
-            padding: 40px 0;
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
-        }
-
-        h1 { font-size: 2.5rem; margin-bottom: 10px; }
-
-        .grid {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 20px;
-        }
-
-        @media (max-width: 850px) { .grid { grid-template-columns: 1fr; } }
-
-        .card {
-            background: var(--card-bg);
-            padding: 25px;
-            border-radius: 20px;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
-            border: 1px solid rgba(255,255,255,0.05);
-            margin-bottom: 25px;
-            transition: transform 0.3s ease;
-        }
-
-        h2 { color: var(--accent); border-left: 4px solid var(--accent); padding-left: 15px; font-size: 1.4rem; }
-
-        table {
-            width: 100%;
-            border-collapse: separate;
-            border-spacing: 0 8px;
-            margin-top: 15px;
-        }
-
-        th { color: var(--secondary); text-transform: uppercase; font-size: 12px; letter-spacing: 1px; padding: 10px; }
-        
-        td { background: rgba(255,255,255,0.03); padding: 12px; text-align: center; border-radius: 8px; }
-
-        input, select, textarea {
-            background: #252b33;
-            border: 1px solid #3d4450;
-            color: white;
             padding: 10px;
-            border-radius: 8px;
-            outline: none;
-            transition: 0.3s;
+            padding-bottom: 80px;
         }
 
-        input:focus { border-color: var(--primary); box-shadow: 0 0 8px rgba(79, 172, 254, 0.4); }
+        .container { max-width: 1200px; margin: auto; }
 
-        button {
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            color: #000;
-            font-weight: bold;
-            padding: 12px 25px;
-            border: none;
-            border-radius: 10px;
-            cursor: pointer;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            width: 100%;
-            margin-top: 15px;
-        }
+        header { text-align: center; padding: 25px 10px; }
+        h1 { margin: 0; font-size: 1.8rem; letter-spacing: 1px; color: var(--primary); }
+        .subtitle { font-size: 0.9rem; color: #888; margin-top: 5px; }
 
-        button:hover { filter: brightness(1.2); transform: translateY(-2px); }
-
-        .progress-container {
-            background: #252b33;
-            border-radius: 50px;
-            height: 12px;
-            margin: 20px 0;
-            overflow: hidden;
-        }
-
-        .bar {
-            height: 100%;
-            background: linear-gradient(90deg, var(--secondary), var(--primary));
-            width: 0%;
-            transition: width 1s cubic-bezier(0.17, 0.67, 0.83, 0.67);
-            box-shadow: 0 0 15px var(--primary);
-        }
-
-        /* Detalle de Ejercicios */
-        .exercise-detail {
+        /* Grid de la semana */
+        .semana-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
             gap: 15px;
-            margin-top: 20px;
         }
 
-        .ex-item {
-            background: #252b33;
+        .dia-card {
+            background: var(--card-bg);
+            border-radius: 18px;
+            padding: 18px;
+            border: 1px solid rgba(255,255,255,0.05);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .dia-card h2 {
+            color: var(--accent);
+            font-size: 1.1rem;
+            margin: 0 0 12px 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .seccion-label {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            color: var(--secondary);
+            margin: 10px 0 5px 0;
+            font-weight: bold;
+            letter-spacing: 0.5px;
+        }
+
+        /* Items de Ejercicio */
+        .ejercicio-item {
+            display: flex;
+            align-items: center;
+            background: rgba(255,255,255,0.03);
+            margin: 4px 0;
+            padding: 12px;
+            border-radius: 10px;
+            transition: 0.2s;
+            cursor: pointer;
+        }
+
+        .ejercicio-item:active { transform: scale(0.98); background: rgba(255,255,255,0.07); }
+
+        .info-container { flex-grow: 1; margin-right: 10px; }
+        .nombre-ej { display: block; font-size: 0.95rem; font-weight: 500; }
+        .series-ej { font-size: 0.8rem; color: #aaa; }
+
+        .check-box {
+            width: 24px;
+            height: 24px;
+            cursor: pointer;
+            accent-color: var(--success);
+            border-radius: 6px;
+        }
+
+        /* Modal */
+        .modal {
+            display: none;
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0;
+            width: 100%; height: 100%;
+            background: rgba(0,0,0,0.85);
+            backdrop-filter: blur(8px);
+        }
+
+        .modal-content {
+            background: var(--card-bg);
+            margin: 10% auto;
+            padding: 25px;
+            width: 85%;
+            max-width: 450px;
+            border-radius: 24px;
+            border: 1px solid var(--secondary);
+            position: relative;
+            animation: slideUp 0.3s ease-out;
+        }
+
+        @keyframes slideUp { from { transform: translateY(50px); opacity: 0; } to { transform: translateY(0); opacity: 1; } }
+
+        .close { position: absolute; right: 20px; top: 15px; font-size: 30px; color: #666; cursor: pointer; }
+
+        .tag-desc {
+            display: inline-block;
+            padding: 4px 10px;
+            background: var(--secondary);
+            color: #000;
+            border-radius: 6px;
+            font-size: 0.75rem;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        /* Footer con Progresión */
+        .progression-footer {
+            background: #222;
             padding: 15px;
-            border-radius: 12px;
-            font-size: 14px;
+            border-radius: 15px;
+            margin-top: 30px;
+            border-left: 5px solid var(--warning);
         }
 
-        .ex-item b { color: var(--primary); display: block; margin-bottom: 5px; font-size: 16px; }
-        .tag { font-size: 11px; background: #3d4450; padding: 2px 8px; border-radius: 4px; color: var(--accent); }
+        .progression-footer h3 { margin: 0 0 8px 0; font-size: 1rem; color: var(--warning); }
+        .progression-footer p { font-size: 0.85rem; margin: 2px 0; color: #ccc; }
 
     </style>
 </head>
@@ -139,186 +147,161 @@
 
 <div class="container">
     <header>
-        <h1>GEMINI FITNESS PRO</h1>
-        <p>Tu evolución, cuantificada.</p>
+        <h1>GEMINI FITNESS TRACKER</h1>
+        <p class="subtitle">Toca cualquier ejercicio para ver la guía técnica</p>
     </header>
 
-    <div class="grid">
-        <div class="card">
-            <h2>📉 Control de Composición</h2>
-            <div style="display: flex; gap: 10px; align-items: center;">
-                <input type="number" id="pesoActual" placeholder="Peso (kg)" style="flex:1">
-                <button onclick="guardarPeso()" style="margin:0; width: auto;">Registrar</button>
+    <div class="semana-grid">
+        <div class="dia-card">
+            <h2>Lunes <span style="font-size: 0.8rem; opacity: 0.7;">Pecho + Tríceps + Abd</span></h2>
+            
+            <div class="seccion-label">Calentamiento (10 min)</div>
+            <div class="ejercicio-item" onclick="verInfo('Calentamiento General', 'Movilidad', '1. Caminar rápido para subir temperatura.\n2. Movilidad de hombros y rotaciones de cintura.\n3. Sentadillas suaves sin peso.', '10 min')">
+                <div class="info-container"><span class="nombre-ej">Caminar + Movilidad</span></div>
+                <input type="checkbox" class="check-box">
             </div>
-            <div class="progress-container">
-                <div class="bar" id="barraPeso"></div>
+
+            <div class="seccion-label">Rutina</div>
+            <div class="ejercicio-item" onclick="verInfo('Flexiones Inclinadas', 'Pecho Superior', 'Manos en una silla estable. Mantén el core firme y baja el pecho hacia el borde de la silla.', '3x8-12')">
+                <div class="info-container"><span class="nombre-ej">Flex. Inclinadas</span><span class="series-ej">3x8–12</span></div>
+                <input type="checkbox" class="check-box">
             </div>
-            <p id="mensajePeso" style="text-align: center; font-weight: bold;"></p>
-            <table id="tablaPeso">
-                <thead><tr><th>#</th><th>Peso</th><th>Estado</th></tr></thead>
-                <tbody></tbody>
-            </table>
-            <p class="small" style="color:#666; font-size: 12px;">Meta: Reducir de 85kg a 75kg</p>
+            <div class="ejercicio-item" onclick="verInfo('Flexiones Normales', 'Pecho', 'Manos al ancho de hombros. Si es muy difícil, hazlas lentas controlando la bajada.', '3x4-8')">
+                <div class="info-container"><span class="nombre-ej">Flexiones Normales</span><span class="series-ej">3x4–8</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+            <div class="ejercicio-item" onclick="verInfo('Fondos entre sillas', 'Tríceps', 'Usa dos sillas firmes. Baja la cadera manteniendo la espalda cerca del apoyo.', '3x6-10')">
+                <div class="info-container"><span class="nombre-ej">Fondos entre Sillas</span><span class="series-ej">3x6–10</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+            <div class="ejercicio-item" onclick="verInfo('Plancha', 'Abdomen', 'Apoya antebrazos. Aprieta glúteos y abdomen como una tabla.', '3x30 seg')">
+                <div class="info-container"><span class="nombre-ej">Plancha</span><span class="series-ej">3x30 seg</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+
+            <div class="seccion-label">Cardio Final</div>
+            <div class="ejercicio-item" onclick="verInfo('Cardio Final', 'Quema Grasa', 'Caminata muy rápida o subir/bajar escaleras sin parar.', '15 min')">
+                <div class="info-container"><span class="nombre-ej">Escaleras/Caminata</span><span class="series-ej">15 min</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
         </div>
 
-        <div class="card">
-            <h2>🌙 Bio-Descanso</h2>
-            <table>
-                <tr>
-                    <th>Día</th>
-                    <th>Horas</th>
-                    <th>Calidad</th>
-                </tr>
-                <script>
-                    const dias = ["Lun", "Mar", "Mié", "Jue", "Vie", "Sáb", "Dom"];
-                    dias.forEach(d => {
-                        document.write(`
-                            <tr>
-                                <td>${d}</td>
-                                <td><input type="number" class="sueño" style="width:50px" placeholder="0"></td>
-                                <td>
-                                    <select class="descanso">
-                                        <option value="Bien">🟢 Bien</option>
-                                        <option value="Normal">🟡 Regular</option>
-                                        <option value="Mal">🔴 Mal</option>
-                                    </select>
-                                </td>
-                            </tr>
-                        `);
-                    });
-                </script>
-            </table>
+        <div class="dia-card">
+            <h2>Martes <span style="font-size: 0.8rem; opacity: 0.7;">Piernas (Cuidado Rodilla)</span></h2>
+            <div class="seccion-label">Rutina</div>
+            <div class="ejercicio-item" onclick="verInfo('Sentadillas Lentas', 'Piernas', 'Baja en 3 segundos, sube en 1. Prioriza que la rodilla no se vaya hacia adentro.', '4x12')">
+                <div class="info-container"><span class="nombre-ej">Sentadillas Lentas</span><span class="series-ej">4x12</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+            <div class="ejercicio-item" onclick="verInfo('Zancadas Cortas', 'Piernas/Glúteo', 'Paso corto para proteger la rodilla. Mantén el torso vertical.', '3x10 p/p')">
+                <div class="info-container"><span class="nombre-ej">Zancadas Cortas</span><span class="series-ej">3x10</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+            <div class="ejercicio-item" onclick="verInfo('Puente de Glúteo', 'Glúteo/Isquios', 'Boca arriba, eleva cadera y aprieta 2 segundos arriba.', '4x15')">
+                <div class="info-container"><span class="nombre-ej">Puente Glúteo</span><span class="series-ej">4x15</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+            <div class="seccion-label">Cardio (Evitar saltos)</div>
+            <div class="ejercicio-item" onclick="verInfo('Cardio Martes', 'Resistencia', 'Caminar rápido o bicicleta. Sin impacto fuerte.', '20-25 min')">
+                <div class="info-container"><span class="nombre-ej">Bici / Caminata Rápida</span><span class="series-ej">25 min</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+        </div>
+
+        <div class="dia-card">
+            <h2>Miércoles <span style="font-size: 0.8rem; opacity: 0.7;">Espalda + Bíceps</span></h2>
+            <div class="seccion-label">Rutina</div>
+            <div class="ejercicio-item" onclick="verInfo('Remo con Mochila', 'Espalda', 'Espalda recta, inclina el torso y lleva la mochila al ombligo.', '4x12')">
+                <div class="info-container"><span class="nombre-ej">Remo Mochila</span><span class="series-ej">4x12</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+            <div class="ejercicio-item" onclick="verInfo('Curl Bíceps', 'Bíceps', 'Usa botellas o mochila. No balancees los hombros.', '4x12')">
+                <div class="info-container"><span class="nombre-ej">Curl Bíceps</span><span class="series-ej">4x12</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+            <div class="ejercicio-item" onclick="verInfo('Superman', 'Lumbar', 'Boca abajo, eleva pecho y piernas levemente y baja suave.', '3x15')">
+                <div class="info-container"><span class="nombre-ej">Superman</span><span class="series-ej">3x15</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+            <div class="ejercicio-item" onclick="verInfo('Hollow Hold', 'Core', 'Boca arriba, despega hombros y pies del suelo manteniendo lumbar pegado.', '3x20 seg')">
+                <div class="info-container"><span class="nombre-ej">Hollow Hold</span><span class="series-ej">3x20s</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+        </div>
+
+        <div class="dia-card">
+            <h2>Jueves <span style="font-size: 0.8rem; opacity: 0.7;">Recuperación Activa</span></h2>
+            <div class="seccion-label">Bajar grasa y mejorar sueño</div>
+            <div class="ejercicio-item" onclick="verInfo('Recuperación', 'Salud', 'Caminata ligera, trote muy suave y muchos estiramientos.', '30-45 min')">
+                <div class="info-container"><span class="nombre-ej">Caminata / Movilidad</span><span class="series-ej">40 min</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+        </div>
+
+        <div class="dia-card">
+            <h2>Viernes <span style="font-size: 0.8rem; opacity: 0.7;">Full Body Calistenia</span></h2>
+            <div class="ejercicio-item" onclick="verInfo('Burpees Suaves', 'Total', 'Sin salto explosivo si la rodilla molesta. Apoya manos, estira pies y vuelve.', '3x8')">
+                <div class="info-container"><span class="nombre-ej">Burpees Suaves</span><span class="series-ej">3x8</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+            <div class="ejercicio-item" onclick="verInfo('Flexiones', 'Empuje', 'Controla la bajada. Haz el máximo que puedas con buena forma.', '4x Máximo')">
+                <div class="info-container"><span class="nombre-ej">Flexiones</span><span class="series-ej">4x MAX</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
+            <div class="ejercicio-item" onclick="verInfo('Sentadillas', 'Piernas', 'Baja profundo si no hay dolor.', '4x15')">
+                <div class="info-container"><span class="nombre-ej">Sentadillas</span><span class="series-ej">4x15</span></div>
+                <input type="checkbox" class="check-box">
+            </div>
         </div>
     </div>
 
-    <div class="card">
-        <h2>📅 Plan de Entrenamiento Semanal</h2>
-        <div style="overflow-x: auto;">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Día</th>
-                        <th>Ejercicio</th>
-                        <th>Completado</th>
-                        <th>Extras</th>
-                        <th>Notas/Molestias</th>
-                    </tr>
-                </thead>
-                <tbody id="rutinaBody">
-                    <tr><td>Lun</td><td>Flexiones Inclinadas (3x10)</td><td><input type="checkbox" class="ejercicio"></td><td><input type="number" class="extra" style="width:40px"></td><td><input type="text" class="molestia"></td></tr>
-                    <tr><td>Lun</td><td>Flexiones Normales (3x5)</td><td><input type="checkbox" class="ejercicio"></td><td><input type="number" class="extra" style="width:40px"></td><td><input type="text" class="molestia"></td></tr>
-                    <tr><td>Mar</td><td>Sentadillas (4x12)</td><td><input type="checkbox" class="ejercicio"></td><td><input type="number" class="extra" style="width:40px"></td><td><input type="text" class="molestia"></td></tr>
-                    <tr><td>Mié</td><td>Remo con Mochila (4x12)</td><td><input type="checkbox" class="ejercicio"></td><td><input type="number" class="extra" style="width:40px"></td><td><input type="text" class="molestia"></td></tr>
-                    <tr><td>Vie</td><td>Plancha Core (3x40s)</td><td><input type="checkbox" class="ejercicio"></td><td><input type="number" class="extra" style="width:40px"></td><td><input type="text" class="molestia"></td></tr>
-                </tbody>
-            </table>
-        </div>
-        <button onclick="calcularProgreso()">Analizar Rendimiento de la Semana</button>
-        <div class="progress-container">
-            <div class="bar" id="barraEntreno"></div>
-        </div>
-        <h3 id="resultadoEntreno" style="font-size: 1.1rem; text-align: center;"></h3>
+    <div class="progression-footer">
+        <h3>🚀 Regla de Progresión Semanal</h3>
+        <p>Cada semana mejora UNA de estas en cada ejercicio:</p>
+        <p>• <b>+1 Repetición</b> por serie.</p>
+        <p>• <b>Menos descanso</b> entre series.</p>
+        <p>• <b>Más peso</b> (mochila más cargada).</p>
     </div>
+</div>
 
-    <div class="card">
-        <h2>📖 Guía Técnica de Ejercicios</h2>
-        <div class="exercise-detail">
-            <div class="ex-item">
-                <b>Flexiones Inclinadas</b>
-                <span class="tag">Pecho Superior / Tríceps</span>
-                <p>Manos sobre una superficie elevada (silla/sofá). Mantener el cuerpo recto como una tabla. <br>⏱ <i>45-60 seg por serie.</i></p>
-            </div>
-            <div class="ex-item">
-                <b>Remo con Mochila</b>
-                <span class="tag">Espalda / Bíceps</span>
-                <p>Espalda paralela al suelo, rodillas semiflexionadas. Lleva la mochila al ombligo apretando escápulas.<br>⏱ <i>50 seg por serie.</i></p>
-            </div>
-            <div class="ex-item">
-                <b>Sentadillas (Squats)</b>
-                <span class="tag">Cuádriceps / Glúteo</span>
-                <p>Pies ancho de hombros. Bajar cadera rompiendo el paralelo sin levantar talones.<br>⏱ <i>60 seg por serie.</i></p>
-            </div>
-            <div class="ex-item">
-                <b>Plancha (Plank)</b>
-                <span class="tag">Core / Estabilidad</span>
-                <p>Apoyo en antebrazos. Apretar glúteos y abdomen fuertemente. Evitar que caiga la cadera.<br>⏱ <i>30-45 seg por serie.</i></p>
-            </div>
+<div id="miModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="cerrarModal()">&times;</span>
+        <span id="modalTag" class="tag-desc"></span>
+        <h2 id="modalTitulo" style="color:var(--primary); margin: 0 0 15px 0;"></h2>
+        <p id="modalDesc" style="font-size: 0.95rem; line-height: 1.6; color: #eee;"></p>
+        <div style="margin-top:20px; padding: 10px; background: rgba(0,0,0,0.2); border-radius: 10px;">
+            <span style="color:var(--accent); font-weight: bold;">Objetivo:</span> 
+            <span id="modalObjetivo"></span>
         </div>
     </div>
 </div>
 
 <script>
-    let contador = 1;
+    function verInfo(titulo, tag, desc, objetivo) {
+        document.getElementById("modalTitulo").innerText = titulo;
+        document.getElementById("modalTag").innerText = tag;
+        document.getElementById("modalDesc").innerText = desc;
+        document.getElementById("modalObjetivo").innerText = objetivo;
+        document.getElementById("miModal").style.display = "block";
+    }
 
-    function guardarPeso(){
-        let inicial = 85;
-        let objetivo = 75;
-        let actual = parseFloat(document.getElementById("pesoActual").value);
+    function cerrarModal() {
+        document.getElementById("miModal").style.display = "none";
+    }
 
-        if(isNaN(actual)){
-            alert("Por favor, introduce un número válido.");
-            return;
+    window.onclick = function(event) {
+        if (event.target == document.getElementById("miModal")) {
+            cerrarModal();
         }
-
-        let progreso = ((inicial - actual) / (inicial - objetivo)) * 100;
-        progreso = Math.max(0, Math.min(100, progreso));
-
-        document.getElementById("barraPeso").style.width = progreso + "%";
-        
-        let texto = "";
-        let color = "";
-        if(actual < inicial) { texto = "¡Vas por buen camino! -" + (inicial-actual).toFixed(1) + "kg"; color="#00e676"; }
-        else if(actual == inicial) { texto = "Manteniendo el peso inicial."; color="#ffeb3b"; }
-        else { texto = "Peso por encima del inicial."; color="#ff4b2b"; }
-
-        document.getElementById("mensajePeso").innerText = texto;
-        document.getElementById("mensajePeso").style.color = color;
-
-        let tabla = document.querySelector("#tablaPeso tbody");
-        let fila = tabla.insertRow(0);
-        fila.innerHTML = `<td>${contador++}</td><td>${actual} kg</td><td style="color:${color}">${actual < inicial ? 'Bajando' : 'Estable'}</td>`;
     }
 
-    function calcularProgreso(){
-        let ejercicios = document.querySelectorAll(".ejercicio");
-        let extras = document.querySelectorAll(".extra");
-        let molestias = document.querySelectorAll(".molestia");
-        let sueño = document.querySelectorAll(".sueño");
-        let descanso = document.querySelectorAll(".descanso");
-
-        let hechos = 0;
-        let repsExtra = 0;
-        let molestiasCount = 0;
-        let sueñoTotal = 0;
-        let sueñoDias = 0;
-        let malosDescansos = 0;
-
-        ejercicios.forEach(e => { if(e.checked) hechos++; });
-        extras.forEach(x => { repsExtra += Number(x.value || 0); });
-        molestias.forEach(m => { if(m.value.trim() !== "") molestiasCount++; });
-        
-        sueño.forEach(s => {
-            if(s.value){
-                sueñoTotal += Number(s.value);
-                sueñoDias++;
-            }
+    // Detener que el modal se abra al marcar el check
+    document.querySelectorAll('.check-box').forEach(check => {
+        check.addEventListener('click', (e) => {
+            e.stopPropagation();
         });
-
-        descanso.forEach(d => { if(d.value == "Mal") malosDescansos++; });
-
-        let promedioSueño = sueñoDias > 0 ? (sueñoTotal/sueñoDias).toFixed(1) : 0;
-        let porcentaje = (hechos/ejercicios.length)*100;
-
-        document.getElementById("barraEntreno").style.width = porcentaje + "%";
-
-        let mensaje = (porcentaje >= 80) ? "🔥 ¡Nivel Leyenda esta semana! " : "⚡ Buen trabajo, mantén el ritmo. ";
-        
-        if(promedioSueño < 7) mensaje += `<br>⚠️ Ojo: Dormiste ${promedioSueño}h de media. El músculo crece cuando descansas.`;
-        if(molestiasCount > 2) mensaje += `<br>🛑 Tienes ${molestiasCount} molestias. Prioriza la técnica sobre el peso.`;
-        if(repsExtra > 10) mensaje += `<br>🚀 ¡Bonus! Esas reps extra marcarán la diferencia.`;
-
-        document.getElementById("resultadoEntreno").innerHTML = mensaje;
-    }
+    });
 </script>
 
 </body>
