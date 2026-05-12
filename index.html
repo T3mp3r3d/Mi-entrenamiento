@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Fitness Tracker Ultra | Ciclo Semanal</title>
+    <title>Fitness Tracker Ultra | Ciclo Total</title>
     <style>
         :root {
             --primary: #00f2fe; --secondary: #4facfe; --bg: #0b0e14;
@@ -36,11 +36,9 @@
         .check-area { background: rgba(0,0,0,0.2); border-top: 1px solid #444; padding: 8px 10px; display: flex; align-items: center; gap: 10px; }
         .check-box { width: 20px; height: 20px; accent-color: var(--success); cursor: pointer; }
         .extra-in { width: 55px !important; padding: 3px !important; font-size: 0.75rem; text-align: center; }
-        .historial-item { font-size: 0.8rem; padding: 5px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; }
-
+        .historial-item { font-size: 0.8rem; padding: 8px; border-bottom: 1px solid #333; display: flex; justify-content: space-between; }
         .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.92); backdrop-filter: blur(6px); }
         .modal-content { background: var(--card-bg); margin: 15% auto; padding: 25px; width: 85%; max-width: 450px; border-radius: 20px; border: 1px solid var(--primary); position: relative; animation: pop 0.3s ease; }
-        @keyframes pop { from {transform: scale(0.9); opacity:0;} to {transform: scale(1); opacity:1;} }
         .close { position: absolute; right: 20px; top: 10px; font-size: 32px; color: #666; cursor: pointer; }
     </style>
 </head>
@@ -61,85 +59,177 @@
         </div>
 
         <div class="card">
-            <h2>🏆 Historial de Semanas</h2>
+            <h2>🏆 Récord de Semanas</h2>
             <div id="historialLogros" style="max-height: 150px; overflow-y: auto;">
-                <p style="font-size: 0.7rem; color: #666;">Aquí aparecerán tus cierres de semana...</p>
+                <p style="font-size: 0.7rem; color: #666;">Al finalizar la semana, verás aquí tu progreso guardado.</p>
             </div>
         </div>
     </div>
 
     <div class="card">
-        <h2>🌙 Registro de Sueño</h2>
-        <div style="overflow-x: auto;">
-            <table>
-                <thead><tr><th>Día</th><th>Hrs</th><th>Calidad</th></tr></thead>
-                <tbody>
-                    <script>
-                        const ds = ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"];
-                        ds.forEach((d, i) => { 
-                            document.write(`<tr><td>${d}</td><td><input type="number" class="sh" data-id="${i}" step="0.5"></td><td><select class="sq" data-id="${i}"><option>Bien</option><option>Normal</option><option>Mal</option></select></td></tr>`); 
-                        });
-                    </script>
-                </tbody>
-            </table>
-        </div>
-    </div>
-
-    <div class="card">
-        <h2>📅 Rutina de Entrenamiento</h2>
+        <h2>📅 Rutina Semanal Completa</h2>
         <div class="semana-grid">
             
             <div class="dia-card">
                 <div class="dia-header">LUNES: Pecho + Tríceps</div>
+                <div class="label-sec">Calentamiento</div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Calentamiento','10 min','Movilidad de hombros y sentadillas suaves.')">
+                        <div class="ej-top"><span>General</span><span class="ej-reps">10 min</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
                 <div class="label-sec">Rutina</div>
                 <div class="ejercicio-item">
                     <div class="ej-info" onclick="verT('Flexiones Inclinadas','3x8-12','Contra silla. Cuerpo recto.')">
                         <div class="ej-top"><span>Flex. Inclinadas</span><span class="ej-reps">3x8-12</span></div>
                     </div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><input type="number" class="extra-in" placeholder="+Reps"></div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><input type="number" class="extra-in" placeholder="+R"></div>
                 </div>
                 <div class="ejercicio-item">
-                    <div class="ej-info" onclick="verT('Flexiones Normales','3x4-8','Técnica completa.')">
+                    <div class="ej-info" onclick="verT('Flexiones Normales','3x4-8','Codos a 45 grados.')">
                         <div class="ej-top"><span>Flex. Normales</span><span class="ej-reps">3x4-8</span></div>
                     </div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><input type="number" class="extra-in" placeholder="+Reps"></div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><input type="number" class="extra-in" placeholder="+R"></div>
+                </div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Fondos','3x6-10','Entre dos sillas con control.')">
+                        <div class="ej-top"><span>Fondos Sillas</span><span class="ej-reps">3x6-10</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
                 </div>
             </div>
-            
+
+            <div class="dia-card">
+                <div class="dia-header">MARTES: Piernas</div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Sentadillas Lentas','4x12','3 segundos para bajar. Cuida rodilla.')">
+                        <div class="ej-top"><span>Sentadillas Lentas</span><span class="ej-reps">4x12</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><input type="number" class="extra-in" placeholder="+R"></div>
+                </div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Zancadas Cortas','3x10','Paso corto para no forzar articulación.')">
+                        <div class="ej-top"><span>Zancadas Cortas</span><span class="ej-reps">3x10</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
+                <div class="label-sec">Cardio</div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Caminata','25 min','Paso firme sin impacto.')">
+                        <div class="ej-top"><span>Caminar Rápido</span><span class="ej-reps">25 min</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
             </div>
 
-        <div style="margin-top: 30px; border-top: 2px solid #333; padding-top: 20px;">
-            <h2>📊 Resumen de la Semana</h2>
-            <button class="btn" onclick="analizar()">ACTUALIZAR PROGRESO</button>
+            <div class="dia-card">
+                <div class="dia-header">MIÉRCOLES: Espalda + Bíceps</div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Remo Mochila','4x12','Espalda recta, jala al ombligo.')">
+                        <div class="ej-top"><span>Remo Mochila</span><span class="ej-reps">4x12</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><input type="number" class="extra-in" placeholder="+R"></div>
+                </div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Curl Bíceps','4x12','Con mochila o botellas de agua.')">
+                        <div class="ej-top"><span>Curl Bíceps</span><span class="ej-reps">4x12</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Plancha','3x40s','Cuerpo alineado y abdomen tenso.')">
+                        <div class="ej-top"><span>Plancha Abd</span><span class="ej-reps">3x40"</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
+            </div>
+
+            <div class="dia-card">
+                <div class="dia-header">JUEVES: Recuperación Activa</div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Caminata','45 min','Ayuda a quemar grasa y recuperar músculo.')">
+                        <div class="ej-top"><span>Paseo Largo</span><span class="ej-reps">45 min</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
+            </div>
+
+            <div class="dia-card">
+                <div class="dia-header">VIERNES: Full Body</div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Flexiones','4xMAX','Todas las que puedas con buena técnica.')">
+                        <div class="ej-top"><span>Flexiones</span><span class="ej-reps">4x MAX</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Sentadillas','4x15','Baja profundo y sube controlado.')">
+                        <div class="ej-top"><span>Sentadillas</span><span class="ej-reps">4x15</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Burpees','3x8','Sin impacto excesivo, movimiento fluido.')">
+                        <div class="ej-top"><span>Burpees Suaves</span><span class="ej-reps">3x8</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
+            </div>
+
+            <div class="dia-card">
+                <div class="dia-header">SÁBADO: Abdomen + Cardio</div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Elevación Piernas','3x12','No toques el suelo al bajar.')">
+                        <div class="ej-top"><span>Elev. Piernas</span><span class="ej-reps">3x12</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Caminata','30 min','Mantén un ritmo constante.')">
+                        <div class="ej-top"><span>Caminata Rápida</span><span class="ej-reps">30 min</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Listo</span></div>
+                </div>
+            </div>
+
+            <div class="dia-card">
+                <div class="dia-header">DOMINGO: Descanso</div>
+                <div class="ejercicio-item">
+                    <div class="ej-info" onclick="verT('Descanso','Libre','Dormir bien y preparar la comida semanal.')">
+                        <div class="ej-top"><span>Recuperación</span><span class="ej-reps">LIBRE</span></div>
+                    </div>
+                    <div class="check-area"><input type="checkbox" class="check-box" onchange="analizar()"><span>Descansado</span></div>
+                </div>
+            </div>
+
+        </div>
+
+        <div style="margin-top: 30px; border-top: 2px solid #333; padding-top: 20px; text-align: center;">
+            <h2>📊 Mi Semana</h2>
             <div class="progress-bar" style="height:25px"><div class="fill" id="barEnt"></div></div>
-            <p id="txtProgreso" style="text-align: center; font-size: 0.9rem; color: var(--accent); margin-bottom: 20px;"></p>
+            <p id="txtProgreso" style="color: var(--accent); font-weight: bold; margin-bottom: 20px;"></p>
             
-            <button class="btn btn-danger" onclick="reiniciarSemana()">🏁 FINALIZAR SEMANA Y REINICIAR</button>
-            <p style="font-size: 0.7rem; color: #888; text-align: center;">Esto guardará tu récord y limpiará los checks para el lunes.</p>
+            <button class="btn btn-danger" onclick="reiniciarSemana()">🏁 CERRAR Y REINICIAR SEMANA</button>
         </div>
     </div>
 </div>
 
 <div id="modal" class="modal">
-    <div class="modal-content"><span class="close" onclick="cerrar()">&times;</span><h2 id="mT"></h2><p id="mG"></p><hr><p id="mD"></p></div>
+    <div class="modal-content"><span class="close" onclick="cerrar()">&times;</span><h2 id="mT"></h2><p id="mG"></p><hr style="border:0; border-top:1px solid #333; margin:15px 0"><p id="mD"></p></div>
 </div>
 
 <script>
-    // SISTEMA DE GUARDADO INTEGRAL
     function guardarEstado() {
         const checks = Array.from(document.querySelectorAll('.check-box')).map(cb => cb.checked);
         const extras = Array.from(document.querySelectorAll('.extra-in')).map(i => i.value);
         const pesos = document.querySelector('#tPeso tbody').innerHTML;
-        const sh = Array.from(document.querySelectorAll('.sh')).map(i => i.value);
-        const sq = Array.from(document.querySelectorAll('.sq')).map(i => i.value);
         const bPeso = document.getElementById('barPeso').style.width;
         const historial = document.getElementById('historialLogros').innerHTML;
 
         localStorage.setItem('fit_checks', JSON.stringify(checks));
         localStorage.setItem('fit_extras', JSON.stringify(extras));
         localStorage.setItem('fit_pesos', pesos);
-        localStorage.setItem('fit_sh', JSON.stringify(sh));
-        localStorage.setItem('fit_sq', JSON.stringify(sq));
         localStorage.setItem('fit_bpeso', bPeso);
         localStorage.setItem('fit_historial', historial);
     }
@@ -151,37 +241,30 @@
         if(extras) document.querySelectorAll('.extra-in').forEach((ex, i) => ex.value = extras[i]);
         const pesos = localStorage.getItem('fit_pesos');
         if(pesos) document.querySelector('#tPeso tbody').innerHTML = pesos;
-        const sh = JSON.parse(localStorage.getItem('fit_sh'));
-        if(sh) document.querySelectorAll('.sh').forEach((input, i) => input.value = sh[i]);
-        const sq = JSON.parse(localStorage.getItem('fit_sq'));
-        if(sq) document.querySelectorAll('.sq').forEach((select, i) => select.value = sq[i]);
         const bPeso = localStorage.getItem('fit_bpeso');
         if(bPeso) document.getElementById('barPeso').style.width = bPeso;
-        const historial = localStorage.getItem('fit_historial');
-        if(historial) document.getElementById('historialLogros').innerHTML = historial;
+        const hist = localStorage.getItem('fit_historial');
+        if(hist) document.getElementById('historialLogros').innerHTML = hist;
         analizar();
     }
 
-    // REINICIO DE SEMANA
     function reiniciarSemana() {
         const chks = document.querySelectorAll('.check-box:checked').length;
         const total = document.querySelectorAll('.check-box').length;
-        const porcentaje = Math.round((chks/total)*100);
+        const p = Math.round((chks/total)*100);
         const fecha = new Date().toLocaleDateString('es-ES', { day: '2-digit', month: 'short' });
 
-        if(confirm(`¿Terminar semana con ${porcentaje}% de progreso? Esto limpiará la rutina para empezar de nuevo.`)) {
-            // Guardar en historial
+        if(confirm(`¿Cerrar semana con ${p}% completado?`)) {
             const hist = document.getElementById('historialLogros');
-            if(hist.innerHTML.includes('Aquí aparecerán')) hist.innerHTML = '';
-            hist.innerHTML = `<div class="historial-item"><span>Semana ${fecha}</span><span style="color:var(--primary)">${porcentaje}% OK</span></div>` + hist.innerHTML;
-
-            // Limpiar checks y extras
+            if(hist.innerHTML.includes('verás aquí')) hist.innerHTML = '';
+            hist.innerHTML = `<div class="historial-item"><span>Semana ${fecha}</span><span style="color:var(--primary)">${p}% OK</span></div>` + hist.innerHTML;
+            
             document.querySelectorAll('.check-box').forEach(cb => cb.checked = false);
             document.querySelectorAll('.extra-in').forEach(ex => ex.value = '');
             
             analizar();
             guardarEstado();
-            alert("¡Semana guardada! Vamos por la siguiente.");
+            alert("¡Semana guardada! Iniciando nueva semana.");
         }
     }
 
@@ -202,13 +285,13 @@
         const total = document.querySelectorAll('.check-box').length;
         const p = (total > 0 ? (chks/total*100) : 0);
         document.getElementById('barEnt').style.width = p+'%';
-        document.getElementById('txtProgreso').innerText = `Has completado ${chks} de ${total} ejercicios esta semana (${Math.round(p)}%)`;
+        document.getElementById('txtProgreso').innerText = `Completado: ${Math.round(p)}% de la semana`;
         guardarEstado();
     }
 
     function verT(t,g,d){
         document.getElementById('mT').innerText=t;
-        document.getElementById('mG').innerText="Objetivo: "+g;
+        document.getElementById('mG').innerText="Meta: "+g;
         document.getElementById('mD').innerText=d;
         document.getElementById('modal').style.display='block';
     }
