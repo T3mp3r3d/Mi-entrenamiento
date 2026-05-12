@@ -6,140 +6,62 @@
     <title>Fitness Tracker Ultra | Control Total</title>
     <style>
         :root {
-            --primary: #00f2fe;
-            --secondary: #4facfe;
-            --bg: #0b0e14;
-            --card-bg: #1a1f26;
-            --text: #e0e6ed;
-            --accent: #7fffd4;
-            --success: #00e676;
-            --warning: #ffeb3b;
-            --danger: #ff4b2b;
+            --primary: #00f2fe; --secondary: #4facfe; --bg: #0b0e14;
+            --card-bg: #1a1f26; --text: #e0e6ed; --accent: #7fffd4;
+            --success: #00e676; --warning: #ffeb3b;
         }
-
-        body {
-            font-family: 'Segoe UI', system-ui, sans-serif;
-            background: var(--bg);
-            color: var(--text);
-            margin: 0;
-            padding: 10px;
-            padding-bottom: 60px;
-        }
-
+        body { font-family: 'Segoe UI', sans-serif; background: var(--bg); color: var(--text); margin: 0; padding: 10px; padding-bottom: 60px; }
         .container { max-width: 1400px; margin: auto; }
-        header { text-align: center; padding: 25px 10px; }
-        h1 { margin: 0; font-size: 1.6rem; background: linear-gradient(90deg, var(--primary), var(--accent)); -webkit-background-clip: text; -webkit-text-fill-color: transparent; text-transform: uppercase; letter-spacing: 1px; }
-
-        .dashboard-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
-            gap: 20px;
-            margin-bottom: 30px;
-        }
-
-        .card {
-            background: var(--card-bg);
-            border-radius: 24px;
-            padding: 20px;
-            border: 1px solid rgba(255,255,255,0.05);
-            box-shadow: 0 15px 35px rgba(0,0,0,0.5);
-        }
-
-        h2 { color: var(--accent); font-size: 1.1rem; margin-top: 0; display: flex; align-items: center; gap: 10px; }
-
-        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.85rem; }
-        th { color: var(--secondary); text-transform: uppercase; padding: 10px; border-bottom: 1px solid #333; }
-        td { padding: 10px; text-align: center; border-bottom: 1px solid #222; }
-
-        input[type="number"], select {
-            background: #252b33; border: 1px solid #3d4450; color: white;
-            padding: 8px; border-radius: 8px; width: 100%; box-sizing: border-box;
-        }
-
-        .btn {
-            background: linear-gradient(135deg, var(--secondary), var(--primary));
-            color: #000; font-weight: bold; border: none; padding: 14px;
-            border-radius: 12px; cursor: pointer; width: 100%; transition: 0.3s;
-        }
-
-        .progress-container { margin: 15px 0; }
-        .progress-bar { background: #252b33; border-radius: 50px; height: 16px; overflow: hidden; border: 1px solid #333; }
-        .fill { height: 100%; background: var(--primary); width: 0%; transition: 1.5s cubic-bezier(0.1, 0, 0.3, 1); box-shadow: 0 0 15px var(--primary); }
-
-        .semana-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(310px, 1fr));
-            gap: 15px;
-        }
-
-        .dia-card {
-            background: #1e242c;
-            border-radius: 20px;
-            padding: 15px;
-            border: 1px solid rgba(255,255,255,0.03);
-        }
-
-        .dia-header { border-bottom: 1px solid #333; padding-bottom: 8px; margin-bottom: 12px; display: flex; justify-content: space-between; align-items: center; }
-        .dia-nombre { color: var(--primary); font-weight: bold; }
-
-        .label-sec { font-size: 0.7rem; color: #888; text-transform: uppercase; margin: 12px 0 5px 0; font-weight: bold; }
-
-        .ejercicio-item {
-            background: rgba(255,255,255,0.03);
-            border-radius: 10px;
-            padding: 10px;
-            margin-bottom: 8px;
-            cursor: pointer;
-            border: 1px solid transparent;
-        }
-        .ejercicio-item:hover { border-color: var(--secondary); }
+        header { text-align: center; padding: 20px; }
+        h1 { margin: 0; font-size: 1.5rem; color: var(--primary); text-transform: uppercase; }
+        .card { background: var(--card-bg); border-radius: 20px; padding: 20px; margin-bottom: 20px; border: 1px solid rgba(255,255,255,0.05); }
+        h2 { color: var(--accent); font-size: 1.1rem; border-left: 4px solid var(--accent); padding-left: 10px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 10px; font-size: 0.8rem; }
+        th, td { padding: 8px; text-align: center; border-bottom: 1px solid #333; }
+        input[type="number"], select, textarea { background: #252b33; border: 1px solid #3d4450; color: white; padding: 6px; border-radius: 6px; width: 100%; box-sizing: border-box; }
+        .btn { background: linear-gradient(135deg, var(--secondary), var(--primary)); color: #000; font-weight: bold; border: none; padding: 12px; border-radius: 10px; cursor: pointer; width: 100%; }
+        .progress-bar { background: #252b33; border-radius: 50px; height: 14px; overflow: hidden; margin: 10px 0; }
+        .fill { height: 100%; background: var(--primary); width: 0%; transition: 1s; box-shadow: 0 0 10px var(--primary); }
+        .semana-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px; }
+        .dia-card { background: #1e242c; border-radius: 15px; padding: 15px; border: 1px solid rgba(255,255,255,0.03); }
+        .dia-header { color: var(--primary); font-weight: bold; border-bottom: 1px solid #333; padding-bottom: 5px; margin-bottom: 10px; }
+        .label-sec { font-size: 0.7rem; color: #888; text-transform: uppercase; margin: 10px 0 5px; font-weight: bold; }
+        .ejercicio-item { background: rgba(255,255,255,0.03); border-radius: 8px; padding: 10px; margin-bottom: 8px; cursor: pointer; }
         .ej-top { display: flex; justify-content: space-between; align-items: center; margin-bottom: 5px; }
-        .ej-name { font-size: 0.9rem; font-weight: 500; }
+        .ej-name { font-size: 0.9rem; }
         .ej-reps { font-size: 0.8rem; color: var(--accent); font-weight: bold; }
-
-        .check-area { border-top: 1px solid #333; padding-top: 5px; display: flex; align-items: center; gap: 10px; }
+        .check-area { border-top: 1px solid #333; padding-top: 5px; display: flex; align-items: center; gap: 8px; }
         .check-box { width: 18px; height: 18px; accent-color: var(--success); }
-
-        .modal {
-            display: none; position: fixed; z-index: 999; left: 0; top: 0;
-            width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(8px);
-        }
-        .modal-content {
-            background: var(--card-bg); margin: 15% auto; padding: 25px;
-            width: 85%; max-width: 450px; border-radius: 25px; border: 1px solid var(--primary);
-            position: relative;
-        }
+        .extra-in { width: 50px !important; padding: 2px !important; }
+        .modal { display: none; position: fixed; z-index: 999; left: 0; top: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.9); backdrop-filter: blur(5px); }
+        .modal-content { background: var(--card-bg); margin: 15% auto; padding: 25px; width: 85%; max-width: 450px; border-radius: 20px; border: 1px solid var(--primary); position: relative; }
         .close { position: absolute; right: 20px; top: 10px; font-size: 30px; color: #666; cursor: pointer; }
     </style>
 </head>
 <body>
 
 <div class="container">
-    <header><h1>FITNESS TRACKER PRO</h1></header>
+    <header><h1>FITNESS TRACKER ULTRA</h1></header>
 
-    <div class="dashboard-grid">
+    <div class="dashboard-grid" style="display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 15px;">
         <div class="card">
-            <h2>📉 Control de Peso (85kg → 75kg)</h2>
-            <div class="progress-container">
-                <div class="progress-bar"><div class="fill" id="barPeso"></div></div>
+            <h2>📉 Peso (85kg → 75kg)</h2>
+            <div class="progress-bar"><div class="fill" id="barPeso"></div></div>
+            <div style="display: flex; gap: 5px; margin-bottom: 10px;">
+                <input type="number" id="inPeso" placeholder="Peso actual" step="0.1">
+                <button class="btn" onclick="regPeso()" style="width:auto; padding: 0 15px;">OK</button>
             </div>
-            <div style="display: flex; gap: 8px;">
-                <input type="number" id="inputPeso" placeholder="Peso (kg)" step="0.1">
-                <button class="btn" onclick="regPeso()" style="width:auto; padding:0 15px;">OK</button>
-            </div>
-            <table id="tablePeso"><thead><tr><th>Fecha</th><th>Peso</th><th>Estado</th></tr></thead><tbody></tbody></table>
+            <table id="tPeso"><thead><tr><th>Fecha</th><th>Kg</th><th>Est.</th></tr></thead><tbody></tbody></table>
         </div>
 
         <div class="card">
             <h2>🌙 Sueño y Descanso</h2>
             <table>
-                <thead><tr><th>Día</th><th>Horas</th><th>Calidad</th></tr></thead>
+                <thead><tr><th>Día</th><th>Hrs</th><th>Calidad</th></tr></thead>
                 <tbody>
                     <script>
-                        const ds = ["Lunes","Martes","Miércoles","Jueves","Viernes","Sábado","Domingo"];
-                        ds.forEach(d => {
-                            document.write(`<tr><td>${d}</td><td><input type="number" class="sh"></td><td><select><option>Bien</option><option>Normal</option><option>Mal</option></select></td></tr>`);
-                        });
+                        const ds = ["Lun","Mar","Mié","Jue","Vie","Sáb","Dom"];
+                        ds.forEach(d => { document.write(`<tr><td>${d}</td><td><input type="number" class="sh"></td><td><select><option>Bien</option><option>Normal</option><option>Mal</option></select></td></tr>`); });
                     </script>
                 </tbody>
             </table>
@@ -147,171 +69,214 @@
     </div>
 
     <div class="card">
-        <h2>📅 Mi Rutina Semanal</h2>
+        <h2>📅 Mi Rutina Completa</h2>
         <div class="semana-grid">
             
             <div class="dia-card">
-                <div class="dia-header"><span class="dia-nombre">LUNES</span><span>Pecho/Tríceps</span></div>
+                <div class="dia-header">LUNES: Pecho + Tríceps + Abdomen</div>
                 <div class="label-sec">Calentamiento (10 min)</div>
-                <div class="ejercicio-item" onclick="verT('Calentamiento','10 min','Caminar rápido, movilidad de hombros, rotaciones de cintura y sentadillas suaves.')">
-                    <div class="ej-top"><span class="ej-name">General</span><span class="ej-reps">10 min</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Calentamiento Lunes','10 min','Caminar rápido, movilidad de hombros, rotaciones de cintura y sentadillas suaves.')">
+                    <div class="ej-top"><span>Calentamiento</span><span class="ej-reps">10 min</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
                 <div class="label-sec">Rutina</div>
-                <div class="ejercicio-item" onclick="verT('Flexiones Inclinadas','3x8-12','Contra silla. Cuerpo recto, baja el pecho al borde.')">
-                    <div class="ej-top"><span class="ej-name">Flex. Inclinadas</span><span class="ej-reps">3x8-12</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Flexiones Inclinadas','3x8-12','Manos en silla. Cuerpo recto. Baja controlado.')">
+                    <div class="ej-top"><span>Flex. Inclinadas</span><span class="ej-reps">3x8-12</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><input type="number" class="extra-in" placeholder="+Reps"></div>
                 </div>
-                <div class="ejercicio-item" onclick="verT('Flexiones Normales','3x4-8','Mantén codos a 45 grados. Aunque cuesten, prioriza técnica.')">
-                    <div class="ej-top"><span class="ej-name">Flex. Normales</span><span class="ej-reps">3x4-8</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Flexiones Normales','3x4-8','Codos a 45°. Baja hasta el suelo aunque cueste.')">
+                    <div class="ej-top"><span>Flex. Normales</span><span class="ej-reps">3x4-8</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><input type="number" class="extra-in" placeholder="+Reps"></div>
                 </div>
-                <div class="ejercicio-item" onclick="verT('Fondos Sillas','3x6-10','Entre dos sillas firmes. Baja cadera cerca del apoyo.')">
-                    <div class="ej-top"><span class="ej-name">Fondos Sillas</span><span class="ej-reps">3x6-10</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Fondos entre Sillas','3x6-10','Espalda pegada a las sillas. Codos a 90°.')">
+                    <div class="ej-top"><span>Fondos Sillas</span><span class="ej-reps">3x6-10</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><input type="number" class="extra-in" placeholder="+Reps"></div>
                 </div>
-                <div class="ejercicio-item" onclick="verT('Flexiones Rodillas','2x Fallo','Para agotar el músculo al final.')">
-                    <div class="ej-top"><span class="ej-name">Flex. Rodillas</span><span class="ej-reps">Al Fallo</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Flexiones Rodillas','2x Fallo','Hasta que no puedas hacer ni una más con buena técnica.')">
+                    <div class="ej-top"><span>Flex. Rodillas</span><span class="ej-reps">2x Fallo</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
-                <div class="ejercicio-item" onclick="verT('Plancha','3x30 seg','Aprieta glúteo y abdomen fuerte.')">
-                    <div class="ej-top"><span class="ej-name">Plancha</span><span class="ej-reps">3x30"</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Plancha','3x30 seg','Cuerpo recto. Aprieta abdomen y glúteo.')">
+                    <div class="ej-top"><span>Plancha</span><span class="ej-reps">3x30"</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Elevaciones de Piernas','3x12','Tumbado boca arriba, sube piernas sin arquear espalda.')">
+                    <div class="ej-top"><span>Elev. Piernas</span><span class="ej-reps">3x12</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Mountain Climbers','3x20','Lleva rodillas al pecho rápido.')">
+                    <div class="ej-top"><span>M. Climbers</span><span class="ej-reps">3x20</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
                 <div class="label-sec">Cardio Final</div>
                 <div class="ejercicio-item" onclick="verT('Cardio','15 min','Caminata rápida o subir escaleras.')">
-                    <div class="ej-top"><span class="ej-name">Caminata/Escaleras</span><span class="ej-reps">15 min</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                    <div class="ej-top"><span>Caminata/Escaleras</span><span class="ej-reps">15 min</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
             </div>
 
             <div class="dia-card">
-                <div class="dia-header"><span class="dia-nombre">MARTES</span><span>Piernas</span></div>
-                <div class="label-sec">Técnica > Intensidad</div>
-                <div class="ejercicio-item" onclick="verT('Sentadillas Lentas','4x12','Baja en 3 segundos, sube en 1. Cuida la rodilla.')">
-                    <div class="ej-top"><span class="ej-name">Sentadillas Lentas</span><span class="ej-reps">4x12</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="dia-header">MARTES: Piernas + Cardio</div>
+                <div class="label-sec">Rutina (Técnica > Peso)</div>
+                <div class="ejercicio-item" onclick="verT('Sentadillas Lentas','4x12','Baja en 3 segundos. Cuida la rodilla.')">
+                    <div class="ej-top"><span>Sentadillas Lentas</span><span class="ej-reps">4x12</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><input type="number" class="extra-in" placeholder="+Reps"></div>
                 </div>
-                <div class="ejercicio-item" onclick="verT('Zancadas Cortas','3x10 p/p','Paso corto para proteger la articulación.')">
-                    <div class="ej-top"><span class="ej-name">Zancadas Cortas</span><span class="ej-reps">3x10</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Sentadilla Apoyo Silla','3x10','Siéntate y levántate controladamente.')">
+                    <div class="ej-top"><span>Silla Apoyo</span><span class="ej-reps">3x10</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Zancadas Cortas','3x10 p/p','Paso corto para evitar dolor de rodilla.')">
+                    <div class="ej-top"><span>Zancadas Cortas</span><span class="ej-reps">3x10</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Puente de Glúteo','4x15','Eleva cadera y aprieta arriba.')">
+                    <div class="ej-top"><span>Puente Glúteo</span><span class="ej-reps">4x15</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Gemelos','4x20','En un escalón, sube y baja talones.')">
+                    <div class="ej-top"><span>Gemelos</span><span class="ej-reps">4x20</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
                 <div class="label-sec">Cardio (20-25 min)</div>
-                <div class="ejercicio-item" onclick="verT('Cardio Martes','25 min','Caminar rápido, bici o escalones. EVITA SALTOS.')">
-                    <div class="ej-top"><span class="ej-name">Bici/Caminar</span><span class="ej-reps">25 min</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Cardio','25 min','Caminar rápido, bici o escalones. EVITA SALTOS.')">
+                    <div class="ej-top"><span>Cardio Libre</span><span class="ej-reps">25 min</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
             </div>
 
             <div class="dia-card">
-                <div class="dia-header"><span class="dia-nombre">MIÉRCOLES</span><span>Espalda/Bíceps</span></div>
-                <div class="ejercicio-item" onclick="verT('Remo Mochila','4x12','Espalda recta, lleva mochila al ombligo.')">
-                    <div class="ej-top"><span class="ej-name">Remo Mochila</span><span class="ej-reps">4x12</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="dia-header">MIÉRCOLES: Espalda + Bíceps + Abdomen</div>
+                <div class="ejercicio-item" onclick="verT('Remo Mochila','4x12','Cuerpo inclinado, lleva el peso al ombligo.')">
+                    <div class="ej-top"><span>Remo Mochila</span><span class="ej-reps">4x12</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><input type="number" class="extra-in" placeholder="+Reps"></div>
                 </div>
-                <div class="ejercicio-item" onclick="verT('Curl Bíceps','4x12','Con mochila o botellas. No balancees los hombros.')">
-                    <div class="ej-top"><span class="ej-name">Curl Bíceps</span><span class="ej-reps">4x12</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Curl Bíceps','4x12','Con mochila o botellas. No muevas los hombros.')">
+                    <div class="ej-top"><span>Curl Bíceps</span><span class="ej-reps">4x12</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
-                <div class="ejercicio-item" onclick="verT('Plancha Lateral','3x20 seg','Mantén cadera elevada.')">
-                    <div class="ej-top"><span class="ej-name">Plancha Lateral</span><span class="ej-reps">3x20"</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Superman','3x15','Boca abajo, eleva pecho y piernas.')">
+                    <div class="ej-top"><span>Superman</span><span class="ej-reps">3x15</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
-            </div>
-
-            <div class="dia-card">
-                <div class="dia-header"><span class="dia-nombre">JUEVES</span><span>Recuperación</span></div>
-                <div class="ejercicio-item" onclick="verT('Recuperación Activa','45 min','Caminar rápido, movilidad y estiramientos. Clave para bajar grasa.')">
-                    <div class="ej-top"><span class="ej-name">Caminar/Movilidad</span><span class="ej-reps">30-45 min</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Plancha Lateral','3x20 seg','Mantén cuerpo alineado.')">
+                    <div class="ej-top"><span>Plancha Lateral</span><span class="ej-reps">3x20"</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
-            </div>
-
-            <div class="dia-card">
-                <div class="dia-header"><span class="dia-nombre">VIERNES</span><span>Full Body</span></div>
-                <div class="ejercicio-item" onclick="verT('Flexiones','MAX','Controlado al máximo.')">
-                    <div class="ej-top"><span class="ej-name">Flexiones</span><span class="ej-reps">4xMAX</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Crunch Abdominal','3x15','Contracción abdominal corta.')">
+                    <div class="ej-top"><span>Crunch Abd</span><span class="ej-reps">3x15</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
-                <div class="ejercicio-item" onclick="verT('Sentadillas','4x15','Baja cadera controladamente.')">
-                    <div class="ej-top"><span class="ej-name">Sentadillas</span><span class="ej-reps">4x15</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
-                </div>
-                <div class="ejercicio-item" onclick="verT('Burpees Suaves','3x8','Sin saltos explosivos, prioriza el movimiento fluido.')">
-                    <div class="ej-top"><span class="ej-name">Burpees Suaves</span><span class="ej-reps">3x8</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Hollow Hold','3x20 seg','Aprieta abdomen contra el suelo.')">
+                    <div class="ej-top"><span>Hollow Hold</span><span class="ej-reps">3x20"</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
             </div>
 
             <div class="dia-card">
-                <div class="dia-header"><span class="dia-nombre">SÁBADO</span><span>Abd/Cardio</span></div>
-                <div class="ejercicio-item" onclick="verT('Mountain Climbers','3x25','Rodillas al pecho con ritmo.')">
-                    <div class="ej-top"><span class="ej-name">M. Climbers</span><span class="ej-reps">3x25</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="dia-header">JUEVES: Cardio + Movilidad</div>
+                <div class="label-sec">Recuperación Activa</div>
+                <div class="ejercicio-item" onclick="verT('Cardio','45 min','Caminar rápido o trote suave.')">
+                    <div class="ej-top"><span>Caminar Rápido</span><span class="ej-reps">45 min</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
-                <div class="ejercicio-item" onclick="verT('Caminata','30 min','Ritmo constante para quemar grasa.')">
-                    <div class="ej-top"><span class="ej-name">Caminar Rápido</span><span class="ej-reps">30 min</span></div>
-                    <div class="check-area"><input type="checkbox" class="check-box" onclick="event.stopPropagation()"><span>Listo</span></div>
+                <div class="ejercicio-item" onclick="verT('Movilidad','15 min','Estiramientos de todo el cuerpo.')">
+                    <div class="ej-top"><span>Estiramientos</span><span class="ej-reps">15 min</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
                 </div>
             </div>
 
             <div class="dia-card">
-                <div class="dia-header"><span class="dia-nombre">DOMINGO</span><span>Descanso</span></div>
-                <div class="ejercicio-item">
-                    <div class="ej-top"><span>Descanso Activo</span><span>Moverse</span></div>
-                    <p style="font-size:0.75rem; color:#888;">Caminar, estirar y dormir mejor.</p>
+                <div class="dia-header">VIERNES: Full Body Calistenia</div>
+                <div class="ejercicio-item" onclick="verT('Flexiones','4x MAX','Máximo controlado. Baja despacio.')">
+                    <div class="ej-top"><span>Flexiones</span><span class="ej-reps">4x MAX</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><input type="number" class="extra-in" placeholder="+Reps"></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Sentadillas','4x15','Baja cadera rompiendo paralelo.')">
+                    <div class="ej-top"><span>Sentadillas</span><span class="ej-reps">4x15</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><input type="number" class="extra-in" placeholder="+Reps"></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Remo Mochila','4x12','Aprieta espalda al subir.')">
+                    <div class="ej-top"><span>Remo Mochila</span><span class="ej-reps">4x12</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Fondos Silla','3x10','Codos hacia atrás, no a los lados.')">
+                    <div class="ej-top"><span>Fondos Silla</span><span class="ej-reps">3x10</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Plancha','3x40 seg','Mantén tensión en todo el cuerpo.')">
+                    <div class="ej-top"><span>Plancha</span><span class="ej-reps">3x40"</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Burpees Suaves','3x8','Sin saltos explosivos, movimiento constante.')">
+                    <div class="ej-top"><span>Burpees Suaves</span><span class="ej-reps">3x8</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+            </div>
+
+            <div class="dia-card">
+                <div class="dia-header">SÁBADO: Abdomen + Cardio</div>
+                <div class="label-sec">Abdomen</div>
+                <div class="ejercicio-item" onclick="verT('Crunch','3x20','Sube expulsando el aire.')">
+                    <div class="ej-top"><span>Crunch</span><span class="ej-reps">3x20</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Elevaciones Piernas','3x12','Baja las piernas lentamente.')">
+                    <div class="ej-top"><span>Elev. Piernas</span><span class="ej-reps">3x12</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('Plancha','3x40 seg','Control de respiración.')">
+                    <div class="ej-top"><span>Plancha</span><span class="ej-reps">3x40"</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="ejercicio-item" onclick="verT('M. Climbers','3x25','Rodillas al pecho.')">
+                    <div class="ej-top"><span>M. Climbers</span><span class="ej-reps">3x25</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+                <div class="label-sec">Cardio</div>
+                <div class="ejercicio-item" onclick="verT('Caminar Rápido','30 min','Ritmo constante.')">
+                    <div class="ej-top"><span>Cardio</span><span class="ej-reps">30 min</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>OK</span></div>
+                </div>
+            </div>
+
+            <div class="dia-card">
+                <div class="dia-header">DOMINGO: Descanso Activo</div>
+                <div class="ejercicio-item" onclick="verT('Descanso Activo','Caminar','Moverse suave, estirar y priorizar el sueño.')">
+                    <div class="ej-top"><span>Moverse/Estirar</span><span class="ej-reps">Libre</span></div>
+                    <div class="check-area"><input type="checkbox" class="check-box"><span>Listo</span></div>
                 </div>
             </div>
 
         </div>
-        <button class="btn" style="margin-top:25px" onclick="analizar()">Analizar Entrenamiento Semanal</button>
-        <div class="progress-bar" style="height:20px; margin-top:10px;"><div class="fill" id="barEnt"></div></div>
-    </div>
-
-    <div class="card" style="border-left:4px solid var(--warning)">
-        <h2 style="color:var(--warning)">🚀 Regla de Progresión</h2>
-        <p style="font-size:0.85rem">Cada semana intenta: <b>+1 repetición</b>, <b>+1 serie</b>, <b>menos descanso</b> o <b>más mochila</b>.</p>
+        <button class="btn" style="margin-top:20px" onclick="analizar()">ANALIZAR SEMANA</button>
+        <div class="progress-bar" style="height:25px"><div class="fill" id="barEnt"></div></div>
     </div>
 </div>
 
 <div id="modal" class="modal">
-    <div class="modal-content">
-        <span class="close" onclick="cerrar()">&times;</span>
-        <h2 id="mT" style="color:var(--primary)"></h2>
-        <p id="mG" style="color:var(--accent); font-weight:bold"></p>
-        <hr style="border:0; border-top:1px solid #333; margin:15px 0">
-        <p id="mD"></p>
-    </div>
+    <div class="modal-content"><span class="close" onclick="cerrar()">&times;</span><h2 id="mT" style="color:var(--primary)"></h2><p id="mG" style="color:var(--accent); font-weight:bold"></p><hr style="border:0; border-top:1px solid #333; margin:15px 0"><p id="mD"></p></div>
 </div>
 
 <script>
     function regPeso(){
-        const i=85, o=75, a=parseFloat(document.getElementById('inputPeso').value);
+        const i=85, o=75, a=parseFloat(document.getElementById('inPeso').value);
         if(isNaN(a)) return;
         let p = ((i-a)/(i-o))*100;
         p = Math.max(0, Math.min(100, p));
         document.getElementById('barPeso').style.width = p+'%';
-        const t = document.querySelector('#tablePeso tbody');
+        const t = document.querySelector('#tPeso tbody');
         const r = t.insertRow(0);
-        r.innerHTML = `<td>${new Date().toLocaleDateString()}</td><td>${a}kg</td><td style="color:var(--success)">${a<i?'⬇':'➡'}</td>`;
+        r.innerHTML = `<td>${new Date().toLocaleDateString()}</td><td>${a}kg</td><td>${a<i?'⬇':'➡'}</td>`;
     }
-
-    function verT(t,g,d){
-        document.getElementById('mT').innerText=t;
-        document.getElementById('mG').innerText="Objetivo: "+g;
-        document.getElementById('mD').innerText=d;
-        document.getElementById('modal').style.display='block';
-    }
-    function cerrar(){document.getElementById('modal').style.display='none';}
-
+    function verT(t,g,d){ document.getElementById('mT').innerText=t; document.getElementById('mG').innerText="Objetivo: "+g; document.getElementById('mD').innerText=d; document.getElementById('modal').style.display='block'; }
+    function cerrar(){ document.getElementById('modal').style.display='none'; }
     function analizar(){
         const chks = document.querySelectorAll('.check-box:checked').length;
         const total = document.querySelectorAll('.check-box').length;
         document.getElementById('barEnt').style.width = (chks/total*100)+'%';
-        alert("Progreso del entrenamiento actualizado.");
     }
-
-    window.onclick=function(e){if(e.target==document.getElementById('modal'))cerrar();}
+    window.onclick=function(e){ if(e.target==document.getElementById('modal')) cerrar(); }
 </script>
 
 </body>
